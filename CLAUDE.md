@@ -7,5 +7,6 @@ Always follow these rules when writing code:
 3. **Never mention yourself in commits** — keep commit messages impersonal (no "I", "we", etc.)
 4. **Keep commit messages under 50 characters** — concise titles for commits
 5. **Use commitizen structure** — format commits as `feat`, `fix`, `chore`, etc.
+6. **Plan** - Whenever the user says "check the plan" or something similar, check the file in the .plan folder
 
 More rules may be added over time.
