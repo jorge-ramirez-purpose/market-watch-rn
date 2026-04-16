@@ -29,3 +29,9 @@ export const TIMEFRAMES = {
   '3M': 90,
   '1Y': 365,
 } as const;
+
+export const QUERY_CONFIG = {
+  TWO_MINUTES: 1000 * 60 * 2,
+  FIVE_MINUTES: 1000 * 60 * 5,
+  RETRY_ATTEMPTS: 2,
+} as const;
