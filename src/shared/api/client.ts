@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/shared/constants';
+import { API_BASE_URL, COINGECKO_API_KEY } from '@/shared/constants';
 
 export type TRequestConfig = {
   params?: Record<string, string | number | boolean>;
@@ -29,6 +29,7 @@ export const apiClient = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'x-cg-demo-api-key': COINGECKO_API_KEY,
       },
       signal: config?.signal,
     });

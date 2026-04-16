@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { RootTabParamList, MarketStackParamList } from '@/shared/types/navigation';
+import { COLORS } from '@/shared/constants';
 
 import { MarketOverviewScreen } from '@/features/market/screens/MarketOverviewScreen';
 import { AssetDetailScreen } from '@/features/asset-detail/screens/AssetDetailScreen';
@@ -35,7 +36,7 @@ export const MainNavigator = () => {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#1E88E5',
+          tabBarActiveTintColor: COLORS.primary,
         }}
       >
         <Tab.Screen
