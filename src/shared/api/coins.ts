@@ -33,7 +33,6 @@ export const fetchCoins = async ({
     signal,
   });
 
-  // Validar con Zod ANTES de devolver
   return coinMarketListSchema.parse(data);
 };
 
