@@ -32,8 +32,6 @@ export const MarketOverviewScreen = ({
 
   const coins = data?.pages.flat() ?? [];
 
-  console.log('[MarketOverview]', { isLoading, isError, error: error?.message, coinsCount: coins.length });
-
   const handleCoinPress = useCallback(
     (coinId: string) => {
       navigation.navigate('AssetDetail', { coinId });
