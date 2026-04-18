@@ -17,7 +17,12 @@ export class ApiError extends Error {
 
 export const apiClient = {
   async get<T>(endpoint: string, config?: TRequestConfig): Promise<T> {
-    const url = new URL(`${API_BASE_URL}${endpoint}`);
+    // In production web, use Vercel proxy; otherwise use API_BASE_URL
+    const baseUrl = typeof window !== 'undefined' && !__DEV__
+      ? '/api/coingecko'
+      : API_BASE_URL;
+
+    const url = new URL(`${baseUrl}${endpoint}`, typeof window !== 'undefined' ? window.location.origin : 'http://localhost');
 
     if (config?.params) {
       Object.entries(config.params).forEach(([key, value]) => {
@@ -29,7 +34,7 @@ export const apiClient = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'x-cg-demo-api-key': COINGECKO_API_KEY,
+        ...(API_BASE_URL === COINGECKO_API_KEY ? { 'x-cg-demo-api-key': COINGECKO_API_KEY } : {}),
       },
       signal: config?.signal,
     });
