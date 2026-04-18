@@ -7,8 +7,8 @@ import Animated, {
   withTiming,
   interpolate,
   Extrapolation,
+  runOnJS,
 } from 'react-native-reanimated';
-import { runOnJS } from "react-native-worklets";
 import { styles } from './SwipeableRow.styles';
 
 type TSwipeableRowProps = {
