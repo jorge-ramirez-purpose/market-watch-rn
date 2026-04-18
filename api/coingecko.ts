@@ -9,17 +9,15 @@ export default async (req: VercelRequest, res: VercelResponse) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Extract the path (everything after /api/coingecko)
-  const path = req.query.path || '/';
-  const queryString = new URLSearchParams(req.query as Record<string, string>);
-
-  // Remove 'path' from query params since it's handled separately
-  queryString.delete('path');
+  // Extract the path from URL (everything after /api/coingecko)
+  const requestUrl = new URL(req.url || '', 'http://localhost');
+  const path = requestUrl.pathname.replace('/api/coingecko', '') || '/';
+  const queryString = requestUrl.searchParams;
 
   try {
-    const url = `${COINGECKO_API}${path}${queryString.toString() ? `?${queryString}` : ''}`;
+    const apiUrl = `${COINGECKO_API}${path}${queryString.toString() ? `?${queryString}` : ''}`;
 
-    const response = await fetch(url, {
+    const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
