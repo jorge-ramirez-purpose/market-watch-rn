@@ -9,9 +9,9 @@ import Animated, {
   Extrapolation,
 } from 'react-native-reanimated';
 import { runOnJS } from "react-native-worklets";
-import { styles } from './SwipableRow.styles';
+import { styles } from './SwipeableRow.styles';
 
-type TSwipableRowProps = {
+type TSwipeableRowProps = {
   children: React.ReactNode;
   onDelete: () => void;
 };
@@ -19,7 +19,7 @@ type TSwipableRowProps = {
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const DELETE_THRESHOLD = -SCREEN_WIDTH * 0.3;
 
-export const SwipableRow = ({ children, onDelete }: TSwipableRowProps) => {
+export const SwipeableRow = ({ children, onDelete }: TSwipeableRowProps) => {
   const translateX = useSharedValue(0);
 
   const handleDelete = useCallback(() => {

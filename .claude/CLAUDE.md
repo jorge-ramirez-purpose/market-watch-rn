@@ -1,12 +1,20 @@
 # Coding Rules
 
-Always follow these rules when writing code:
+## TypeScript & Component Standards
 
-1. **Always use types** — TypeScript types throughout, no `any` unless truly unavoidable
-2. **Always use arrow functions** — no `function` keyword declarations
-3. **Never mention yourself in commits** — keep commit messages impersonal (no "I", "we", etc.) No co-author messages either.
-4. **Keep commit messages under 50 characters** — concise titles for commits
-5. **Use commitizen structure** — format commits as `feat`, `fix`, `chore`, etc.
-6. **Plan** - Whenever the user says "check the plan" or something similar, check the file in the .plan folder
+Always follow these patterns when writing code:
 
-More rules may be added over time.
+1. **Use `type` instead of `interface`** — all type definitions use the `type` keyword
+2. **Use arrow functions** — no `function` keyword declarations. All components and functions are arrow functions
+3. **Styles in separate files** — all component styles go in `Component.styles.ts` files, never inline with `StyleSheet.create()`
+4. **Type prefix with T** — all prop/type names start with T: `TComponentProps`, `TStateType`, etc.
+
+## Commit Message Standards
+
+1. **Never mention yourself** — keep messages impersonal (no "I", "we", co-author messages)
+2. **Keep under 50 characters** — concise titles for commits
+3. **Use commitizen structure** — format as `feat`, `fix`, `chore`, `refactor`, etc.
+
+## Other Rules
+
+- **Plan references** — when the user says "check the plan", look in the `.plan` folder
