@@ -29,7 +29,7 @@ export const apiClient = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...(API_BASE_URL === COINGECKO_API_KEY ? { 'x-cg-demo-api-key': COINGECKO_API_KEY } : {}),
+        ...(COINGECKO_API_KEY ? { 'x-cg-demo-api-key': COINGECKO_API_KEY } : {}),
       },
       signal: config?.signal,
     });
