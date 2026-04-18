@@ -1,23 +1,24 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '@/shared/constants';
+import type { TThemeColors } from '@/shared/theme/colors';
 
-export const styles = StyleSheet.create({
-  statRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: COLORS.border,
-  },
-  statLabel: {
-    fontSize: 14,
-    color: COLORS.textSecondary,
-  },
-  statValue: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: COLORS.text,
-    fontVariant: ['tabular-nums'],
-  },
-});
+export const createStyles = (colors: TThemeColors) =>
+  StyleSheet.create({
+    statRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingVertical: 12,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: colors.border,
+    },
+    statLabel: {
+      fontSize: 14,
+      color: colors.textSecondary,
+    },
+    statValue: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: colors.text,
+      fontVariant: ['tabular-nums'],
+    },
+  });

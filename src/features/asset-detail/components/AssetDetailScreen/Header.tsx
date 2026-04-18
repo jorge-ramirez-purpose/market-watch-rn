@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
+import { useTheme } from '@/shared/hooks/useTheme';
 import type { TCoinDetail } from '@/shared/types';
-import { styles } from './Header.styles';
+import { createStyles } from './Header.styles';
 
 type THeaderProps = {
   coin: TCoinDetail;
@@ -14,6 +15,9 @@ export const Header = ({
   isInWatchlist,
   onWatchlistToggle,
 }: THeaderProps) => {
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={styles.header}>
       <Image

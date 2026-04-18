@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { TIMEFRAMES } from '@/shared/constants';
-import { styles } from './TimeframeSelector.styles';
+import { useTheme } from '@/shared/hooks/useTheme';
+import { createStyles } from './TimeframeSelector.styles';
 
-type TimeframeSelectorProps = {
+type TTimeframeSelectorProps = {
   selected: keyof typeof TIMEFRAMES;
   onSelect: (timeframe: keyof typeof TIMEFRAMES) => void;
 };
@@ -11,7 +12,10 @@ type TimeframeSelectorProps = {
 export const TimeframeSelector = ({
   selected,
   onSelect,
-}: TimeframeSelectorProps) => {
+}: TTimeframeSelectorProps) => {
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={styles.container}>
       {(Object.keys(TIMEFRAMES) as Array<keyof typeof TIMEFRAMES>).map(

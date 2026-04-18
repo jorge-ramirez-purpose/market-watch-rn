@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Text } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -8,7 +8,8 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { formatCurrency } from '@/shared/utils/formatters';
-import { styles } from './AnimatedPrice.styles';
+import { useTheme } from '@/shared/hooks/useTheme';
+import { createStyles } from './AnimatedPrice.styles';
 
 type TAnimatedPriceProps = {
   price: number;
@@ -23,6 +24,8 @@ export const AnimatedPrice = ({
   currency,
   fontSize = 16,
 }: TAnimatedPriceProps) => {
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const scale = useSharedValue(1);
   const colorProgress = useSharedValue(0);
 

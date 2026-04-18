@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text } from 'react-native';
 import { PriceChange } from '@/shared/components/PriceChange';
-import { styles } from './StatRow.styles';
+import { useTheme } from '@/shared/hooks/useTheme';
+import { createStyles } from './StatRow.styles';
 
-type StatRowProps = {
+type TStatRowProps = {
   label: string;
   value: string | null;
   changeValue?: number | null;
 };
 
-export const StatRow = ({ label, value, changeValue }: StatRowProps) => {
+export const StatRow = ({ label, value, changeValue }: TStatRowProps) => {
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
+
   return (
     <View style={styles.statRow}>
       <Text style={styles.statLabel}>{label}</Text>

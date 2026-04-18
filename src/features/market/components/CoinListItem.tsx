@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,9 @@ import {
 } from 'react-native';
 import { PriceChange } from '@/shared/components/PriceChange';
 import { formatCurrency } from '@/shared/utils/formatters';
+import { useTheme } from '@/shared/hooks/useTheme';
 import { TCoinMarket } from '@/shared/schemas/coin';
-import { styles } from './CoinListItem.styles';
+import { createStyles } from './CoinListItem.styles';
 
 type TCoinListItemProps = {
   coin: TCoinMarket;
@@ -21,10 +22,13 @@ export const CoinListItem = React.memo(({
   currency,
   onPress,
 }: TCoinListItemProps) => {
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const handlePress = useCallback(() => {
     onPress(coin.id);
   }, [coin.id, onPress]);
-const upperCaseSymbol = coin.symbol.toUpperCase();
+  const upperCaseSymbol = coin.symbol.toUpperCase();
+
   return (
     <Pressable
       onPress={handlePress}

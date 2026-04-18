@@ -1,16 +1,17 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '@/shared/constants';
+import type { TThemeColors } from '@/shared/theme/colors';
 
-export const styles = StyleSheet.create({
-  price: {
-    fontWeight: '600',
-    color: COLORS.text,
-    fontVariant: ['tabular-nums'],
-  },
-  positive: {
-    color: COLORS.positive,
-  },
-  negative: {
-    color: COLORS.negative,
-  },
-});
+export const createStyles = (colors: TThemeColors) =>
+  StyleSheet.create({
+    price: {
+      fontWeight: '600',
+      color: colors.text,
+      fontVariant: ['tabular-nums'],
+    },
+    positive: {
+      color: colors.positive,
+    },
+    negative: {
+      color: colors.negative,
+    },
+  });

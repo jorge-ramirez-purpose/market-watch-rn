@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -9,7 +9,8 @@ import Animated, {
   Extrapolation,
   runOnJS,
 } from 'react-native-reanimated';
-import { styles } from './SwipeableRow.styles';
+import { useTheme } from '@/shared/hooks/useTheme';
+import { createStyles } from './SwipeableRow.styles';
 
 type TSwipeableRowProps = {
   children: React.ReactNode;
@@ -20,6 +21,8 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const DELETE_THRESHOLD = -SCREEN_WIDTH * 0.3;
 
 export const SwipeableRow = ({ children, onDelete }: TSwipeableRowProps) => {
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const translateX = useSharedValue(0);
 
   const handleDelete = useCallback(() => {

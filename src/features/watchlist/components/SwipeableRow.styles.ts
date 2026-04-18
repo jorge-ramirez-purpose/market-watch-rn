@@ -1,26 +1,27 @@
 import { StyleSheet } from 'react-native';
-import { COLORS } from '@/shared/constants';
+import type { TThemeColors } from '@/shared/theme/colors';
 
-export const styles = StyleSheet.create({
-  container: {
-    overflow: 'hidden',
-  },
-  deleteContainer: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
-    width: '30%',
-    backgroundColor: COLORS.negative,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  deleteText: {
-    color: '#FFFFFF',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  row: {
-    backgroundColor: COLORS.background,
-  },
-});
+export const createStyles = (colors: TThemeColors) =>
+  StyleSheet.create({
+    container: {
+      overflow: 'hidden',
+    },
+    deleteContainer: {
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      bottom: 0,
+      width: '30%',
+      backgroundColor: colors.negative,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    deleteText: {
+      color: colors.textOnPrimary,
+      fontWeight: '700',
+      fontSize: 16,
+    },
+    row: {
+      backgroundColor: colors.background,
+    },
+  });
