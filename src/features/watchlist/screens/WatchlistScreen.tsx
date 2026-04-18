@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import { useQueries } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useWatchlistStore } from '@/shared/stores/watchlistStore';
 import { useSettingsStore } from '@/shared/stores/settingsStore';
 import { fetchCoins } from '@/shared/api/coins';
@@ -17,30 +17,25 @@ export const WatchlistScreen = () => {
   );
   const currency = useSettingsStore((state) => state.currency);
 
-  const coinIds = items.map((item) => item.coinId);
+  const coinIds = useMemo(() => items.map((item) => item.coinId), [items]);
 
-  const watchlistQuery = useQueries({
-    queries: coinIds.length > 0
-      ? [
-          {
-            queryKey: [QUERY_KEYS.coins, 'watchlist', currency, coinIds],
-            queryFn: ({ signal }: { signal: AbortSignal }) =>
-              fetchCoins({
-                currency,
-                page: 1,
-                perPage: 50,
-                signal,
-              }),
-            staleTime: 1000 * 60,
-          },
-        ]
-      : [],
+  const { data: allCoins = [] } = useQuery({
+    queryKey: [QUERY_KEYS.coins, 'watchlist', currency],
+    queryFn: ({ signal }: { signal: AbortSignal }) =>
+      fetchCoins({
+        currency,
+        page: 1,
+        perPage: 50,
+        signal,
+      }),
+    enabled: items.length > 0,
+    staleTime: 1000 * 60,
   });
 
-  const watchlistCoins =
-    watchlistQuery[0]?.data?.filter((coin) =>
-      coinIds.includes(coin.id),
-    ) ?? [];
+  const watchlistCoins = useMemo(
+    () => allCoins.filter((coin) => coinIds.includes(coin.id)),
+    [allCoins, coinIds],
+  );
 
   const handleCoinPress = useCallback((coinId: string) => {
     console.log('Navigate to:', coinId);
