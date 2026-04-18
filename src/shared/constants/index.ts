@@ -1,4 +1,10 @@
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'https://api.coingecko.com/api/v3';
+import { Platform } from 'react-native';
+
+const COINGECKO_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'https://api.coingecko.com/api/v3';
+const DEV_PROXY_URL = 'http://localhost:3001/api/v3';
+
+export const API_BASE_URL =
+  __DEV__ && Platform.OS === 'web' ? DEV_PROXY_URL : COINGECKO_URL;
 export const COINGECKO_API_KEY = process.env.EXPO_PUBLIC_COINGECKO_API_KEY || '';
 
 export const QUERY_KEYS = {
