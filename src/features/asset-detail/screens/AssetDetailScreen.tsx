@@ -1,12 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { useCoinDetail } from '../hooks/useCoinDetail';
 import { useMarketChart } from '../hooks/useMarketChart';
 import { useWatchlistStore } from '@/shared/stores/watchlistStore';
 import { useSettingsStore } from '@/shared/stores/settingsStore';
-import { COLORS, TIMEFRAMES } from '@/shared/constants';
+import { useTheme } from '@/shared/hooks/useTheme';
+import { TIMEFRAMES } from '@/shared/constants';
 import type { AssetDetailScreenProps } from '@/shared/types/navigation';
-import { styles } from './AssetDetailScreen.styles';
+import { createStyles } from './AssetDetailScreen.styles';
 import { Header } from '../components/AssetDetailScreen/Header';
 import { Price } from '../components/AssetDetailScreen/Price';
 import { Chart } from '../components/AssetDetailScreen/Chart';
@@ -15,6 +16,8 @@ import { Stats } from '../components/AssetDetailScreen/Stats';
 export const AssetDetailScreen = ({ route }: AssetDetailScreenProps) => {
   const { coinId } = route.params;
   const currency = useSettingsStore((state) => state.currency);
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const [timeframe, setTimeframe] = useState<keyof typeof TIMEFRAMES>('1M');
 
   const { data: coin, isLoading: isLoadingDetail } = useCoinDetail(coinId);
@@ -42,7 +45,7 @@ export const AssetDetailScreen = ({ route }: AssetDetailScreenProps) => {
   if (isLoadingDetail) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }

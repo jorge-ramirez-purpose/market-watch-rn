@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { View, Text, Switch, Pressable } from 'react-native';
 import { useSettingsStore } from '@/shared/stores/settingsStore';
-import { COLORS } from '@/shared/constants';
-import { styles } from './SettingsScreen.styles';
+import { useTheme } from '@/shared/hooks/useTheme';
+import { createStyles } from './SettingsScreen.styles';
 
 type TSettingsScreenProps = Record<string, never>;
 
@@ -11,6 +11,8 @@ export const SettingsScreen: React.FC<TSettingsScreenProps> = () => {
   const theme = useSettingsStore((state) => state.theme);
   const setCurrency = useSettingsStore((state) => state.setCurrency);
   const setTheme = useSettingsStore((state) => state.setTheme);
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   return (
     <View style={styles.container}>
@@ -59,7 +61,7 @@ export const SettingsScreen: React.FC<TSettingsScreenProps> = () => {
         <Switch
           value={theme === 'dark'}
           onValueChange={(value) => setTheme(value ? 'dark' : 'light')}
-          trackColor={{ true: COLORS.primary }}
+          trackColor={{ true: colors.primary }}
         />
       </View>
 

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   View,
   FlatList,
@@ -9,15 +9,17 @@ import {
 import { useCoins } from '../hooks/useCoins';
 import { CoinListItem } from '../components/CoinListItem';
 import { useSettingsStore } from '@/shared/stores/settingsStore';
-import { COLORS } from '@/shared/constants';
+import { useTheme } from '@/shared/hooks/useTheme';
 import type { MarketOverviewScreenProps } from '@/shared/types/navigation';
 import type { TCoinMarket } from '@/shared/schemas/coin';
-import { styles } from './MarketOverviewScreen.styles';
+import { createStyles } from './MarketOverviewScreen.styles';
 
 export const MarketOverviewScreen = ({
   navigation,
 }: MarketOverviewScreenProps) => {
   const currency = useSettingsStore((state) => state.currency);
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
   const {
     data,
     isLoading,
@@ -63,12 +65,12 @@ export const MarketOverviewScreen = ({
         <ActivityIndicator size="small" />
       </View>
     );
-  }, [isFetchingNextPage]);
+  }, [isFetchingNextPage, styles.footer]);
 
   if (isLoading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" color={COLORS.primary} />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
@@ -102,7 +104,7 @@ export const MarketOverviewScreen = ({
           <RefreshControl
             refreshing={isRefetching}
             onRefresh={refetch}
-            tintColor={COLORS.primary}
+            tintColor={colors.primary}
           />
         }
       />

@@ -3,12 +3,13 @@ import { View, Text, FlatList } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { useWatchlistStore } from '@/shared/stores/watchlistStore';
 import { useSettingsStore } from '@/shared/stores/settingsStore';
+import { useTheme } from '@/shared/hooks/useTheme';
 import { fetchCoins } from '@/shared/api/coins';
 import { CoinListItem } from '@/features/market/components/CoinListItem';
 import { QUERY_KEYS } from '@/shared/constants';
 import { SwipeableRow } from '../components/SwipeableRow';
 import type { TCoinMarket } from '@/shared/schemas/coin';
-import { styles } from './WatchlistScreen.styles';
+import { createStyles } from './WatchlistScreen.styles';
 
 export const WatchlistScreen = () => {
   const items = useWatchlistStore((state) => state.items);
@@ -16,6 +17,8 @@ export const WatchlistScreen = () => {
     (state) => state.removeFromWatchlist,
   );
   const currency = useSettingsStore((state) => state.currency);
+  const colors = useTheme();
+  const styles = useMemo(() => createStyles(colors), [colors]);
 
   const coinIds = useMemo(() => items.map((item) => item.coinId), [items]);
 
