@@ -5,10 +5,10 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
-  runOnJS,
   interpolate,
   Extrapolation,
 } from 'react-native-reanimated';
+import { runOnJS } from "react-native-worklets";
 import { styles } from './SwipableRow.styles';
 
 type TSwipableRowProps = {
