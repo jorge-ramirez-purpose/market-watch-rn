@@ -1,9 +1,9 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { RootTabParamList, MarketStackParamList } from '@/shared/types/navigation';
-import { COLORS } from '@/shared/constants';
+import { useTheme } from '@/shared/hooks/useTheme';
 
 import { MarketOverviewScreen } from '@/features/market/screens/MarketOverviewScreen';
 import { AssetDetailScreen } from '@/features/asset-detail/screens/AssetDetailScreen';
@@ -14,8 +14,15 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 const MarketStack = createNativeStackNavigator<MarketStackParamList>();
 
 const MarketStackNavigator = () => {
+  const colors = useTheme();
+
   return (
-    <MarketStack.Navigator>
+    <MarketStack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: colors.surface },
+        headerTintColor: colors.text,
+      }}
+    >
       <MarketStack.Screen
         name="MarketOverview"
         component={MarketOverviewScreen}
@@ -31,12 +38,33 @@ const MarketStackNavigator = () => {
 };
 
 export const MainNavigator = () => {
+  const colors = useTheme();
+
+  const navigationTheme = {
+    ...DefaultTheme,
+    dark: colors.background === '#121212',
+    colors: {
+      ...DefaultTheme.colors,
+      primary: colors.primary,
+      background: colors.background,
+      card: colors.surface,
+      text: colors.text,
+      border: colors.border,
+      notification: colors.negative,
+    },
+  };
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navigationTheme}>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: COLORS.primary,
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.textSecondary,
+          tabBarStyle: {
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
+          },
         }}
       >
         <Tab.Screen
@@ -57,4 +85,4 @@ export const MainNavigator = () => {
       </Tab.Navigator>
     </NavigationContainer>
   );
-}
+};
