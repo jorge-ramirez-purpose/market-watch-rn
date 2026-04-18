@@ -38,7 +38,7 @@ export const WatchlistScreen = () => {
   );
 
   const handleCoinPress = useCallback((coinId: string) => {
-    console.log('Navigate to:', coinId);
+    console.info('Navigate to:', coinId);
   }, []);
 
   const renderItem = useCallback(
