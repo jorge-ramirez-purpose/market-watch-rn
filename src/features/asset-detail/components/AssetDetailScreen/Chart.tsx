@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import { COLORS, TIMEFRAMES } from '@/shared/constants';
+import { TIMEFRAMES } from '@/shared/constants';
+import { useTheme } from '@/shared/hooks/useTheme';
 import type { TPriceDataPoint } from '@/shared/types';
 import { TimeframeSelector } from '../TimeframeSelector';
 import { PriceChart } from '../PriceChart';
@@ -19,12 +20,14 @@ export const Chart = ({
   chartData,
   isLoading,
 }: TChartProps) => {
+  const colors = useTheme();
+
   return (
     <>
       <TimeframeSelector selected={timeframe} onSelect={onTimeframeSelect} />
       {isLoading ? (
         <View style={styles.chartLoading}>
-          <ActivityIndicator size="small" color={COLORS.primary} />
+          <ActivityIndicator size="small" color={colors.primary} />
         </View>
       ) : chartData ? (
         <PriceChart data={chartData} />

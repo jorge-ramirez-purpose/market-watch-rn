@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { COLORS } from '@/shared/constants';
+import { useTheme } from '@/shared/hooks/useTheme';
 import { styles } from './PriceChange.styles';
 
 type TPriceChangeProps = {
@@ -9,12 +9,14 @@ type TPriceChangeProps = {
 };
 
 export const PriceChange = ({ value, fontSize = 14 }: TPriceChangeProps) => {
+  const colors = useTheme();
+
   if (value === null) {
     return <Text style={[styles.text, { fontSize }]}>—</Text>;
   }
 
   const isPositive = value >= 0;
-  const color = isPositive ? COLORS.positive : COLORS.negative;
+  const color = isPositive ? colors.positive : colors.negative;
   const prefix = isPositive ? '+' : '';
 
   return (
