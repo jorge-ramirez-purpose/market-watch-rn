@@ -11,7 +11,7 @@ This skill generates commit messages based on the code changes made in a project
   - Using the commitizen structure (e.g., `feat`, `fix`, `chore`).
   - Avoiding personal pronouns (e.g., "I", "we").
   - Avoiding co-author messages.
-- Do not push code automatically, only generate commit messages for the user to review and use as needed.
+- Do not commit or push code automatically. Only generate and display the commit message for the user to review and use as needed.
 ## Usage
 To use this skill, simply run the command to generate a commit message after making changes to your codebase. The skill will analyze the changes and provide a suggested commit message that you can use or modify as needed.
 ## Example
