@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { View, Text, Image, Pressable } from 'react-native';
 import { useTheme } from '@/shared/hooks/useTheme';
-import type { TCoinDetail } from '@/shared/types';
 import { createStyles } from './Header.styles';
+import { TCoinDetail } from '@/shared/schemas/coin';
 
 type THeaderProps = {
   coin: TCoinDetail;
