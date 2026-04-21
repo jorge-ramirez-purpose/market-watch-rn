@@ -34,7 +34,7 @@ export const SwipeableRow = ({ children, onDelete }: TSwipeableRowProps) => {
     .onUpdate((event) => {
       translateX.value = Math.min(0, event.translationX);
     })
-    .onEnd((event) => {
+    .onEnd((_event) => {
       if (translateX.value < DELETE_THRESHOLD) {
         translateX.value = withTiming(-SCREEN_WIDTH, { duration: 200 }, () => {
           runOnJS(handleDelete)();

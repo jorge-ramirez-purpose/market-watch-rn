@@ -12,44 +12,49 @@ export const useWebSocket = ({
   enabled = true,
 }: TUseWebSocketOptions) => {
   const wsRef = useRef<WebSocket | null>(null);
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
-  const connect = useCallback(() => {
+  useEffect(() => {
     if (!enabled) return;
 
-    const ws = new WebSocket(url);
+    const connect = () => {
+      const ws = new WebSocket(url);
 
-    ws.onopen = () => {
-      setIsConnected(true);
+      ws.onopen = () => {
+        setIsConnected(true);
+      };
+
+      ws.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          onMessage(data);
+        } catch {
+          console.warn('Received non-JSON message:', event.data);
+        }
+      };
+
+      ws.onerror = () => {
+        setIsConnected(false);
+      };
+
+      ws.onclose = () => {
+        setIsConnected(false);
+        reconnectTimerRef.current = setTimeout(connect, 5000);
+      };
+
+      wsRef.current = ws;
     };
 
-    ws.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        onMessage(data);
-      } catch {
-        console.warn('Received non-JSON message:', event.data);}
-    };
-
-    ws.onerror = () => {
-      setIsConnected(false);
-    };
-
-    ws.onclose = () => {
-      setIsConnected(false);
-      setTimeout(connect, 5000);
-    };
-
-    wsRef.current = ws;
-  }, [url, onMessage, enabled]);
-
-  useEffect(() => {
     connect();
 
     return () => {
+      if (reconnectTimerRef.current) {
+        clearTimeout(reconnectTimerRef.current);
+      }
       wsRef.current?.close();
     };
-  }, [connect]);
+  }, [url, onMessage, enabled]);
 
   const send = useCallback((data: unknown) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
